@@ -1,0 +1,5 @@
+#+TITLE: Readme
+
+* Description
+
+A repository that sets up a basic S3 triggered lambda with input and output buckets.
