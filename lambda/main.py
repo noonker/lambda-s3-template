@@ -6,7 +6,27 @@ import os
 log = logging.getLogger()
 log.setLevel(logging.INFO)
 
+def send_email(email, subject, body):
+    client = boto3.client('ses',)
 
+    response = client.send_email(
+    Destination={
+        'ToAddresses': [email],
+    },
+
+    Message={
+        'Body': {
+            'Text': {
+                'Charset': 'UTF-8',
+                'Data': body,
+            },
+        },
+        'Subject': {
+            'Charset': 'UTF-8',
+            'Data': subject,
+        },
+    },
+    Source=email)
 
 def handler(event, context):
     # Read the file

@@ -4,6 +4,7 @@ import * as cdk from '@aws-cdk/core';
 import * as s3 from '@aws-cdk/aws-s3';
 import * as lambda from '@aws-cdk/aws-lambda';
 import * as lambdaEventSources from '@aws-cdk/aws-lambda-event-sources';
+import * as iam from '@aws-cdk/aws-iam';
 
 export class LambdaS3TemplateStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
@@ -29,6 +30,12 @@ export class LambdaS3TemplateStack extends cdk.Stack {
       handler: 'main.handler',
       runtime: lambda.Runtime.PYTHON_3_9,
     });
+
+    lambdaFunction.addToRolePolicy(new iam.PolicyStatement({
+      actions: ['ses:SendEmail', 'SES:SendRawEmail'],
+      resources: ['*'],
+      effect: iam.Effect.ALLOW,
+    }));
 
     lambdaFunction.addEnvironment("RESULTS_BUCKET", resultsBucket.bucketName)
     lambdaFunction.addEnvironment("ERROR_BUCKET", errorBucket.bucketName)
