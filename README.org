@@ -1,5 +1,15 @@
-#+TITLE: Readme
+#+TITLE: lambda-s3-template
 
 * Description
 
-A repository that sets up a basic S3 triggered lambda with input and output buckets.
+This repository sets up AWS infrastructure to run a Lambda on S3 put events. To change how the lambda operates simply modify the code in =lambda/main.py=. There should be enough of a skeleton in that file to:
+ - Read a file from the =sourceBucket=
+ - Modify / action on a file in a bucket
+ - Upload the artifacts to a =resultsBucket= S3 bucket
+
+To deploy this code ensure that the [[https://aws.amazon.com/cli/][AWS Command Line Interface (CLI)]] is installed and run the following after pulling the repository
+#+begin_src shell
+cd lambda-s3-template
+cdk init # Sets up the environment to deploy this CDK stack
+cdk deploy # Deployes all the assets
+#+end_src
